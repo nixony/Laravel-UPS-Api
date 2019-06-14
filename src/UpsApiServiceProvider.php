@@ -83,7 +83,7 @@ class UpsApiServiceProvider extends ServiceProvider
                 $config['password'],
                 $config['sandbox'],
                 null,
-                $app->make('log')
+                null
             );
         });
     }
@@ -104,7 +104,7 @@ class UpsApiServiceProvider extends ServiceProvider
                 $config['password'],
                 $config['sandbox'],
                 null,
-                $app->make('log')
+                null
             );
         });
     }
@@ -125,7 +125,7 @@ class UpsApiServiceProvider extends ServiceProvider
                 $config['password'],
                 $config['sandbox'],
                 null,
-                $app->make('log')
+                null
             );
         });
     }
@@ -146,7 +146,7 @@ class UpsApiServiceProvider extends ServiceProvider
                 $config['password'],
                 $config['sandbox'],
                 null,
-                $app->make('log')
+                null
             );
         });
     }
@@ -167,7 +167,7 @@ class UpsApiServiceProvider extends ServiceProvider
                 $config['password'],
                 $config['sandbox'],
                 null,
-                $app->make('log')
+                null
             );
         });
     }
@@ -188,7 +188,7 @@ class UpsApiServiceProvider extends ServiceProvider
                 $config['password'],
                 $config['sandbox'],
                 null,
-                $app->make('log')
+                null
             );
         });
     }
@@ -209,7 +209,7 @@ class UpsApiServiceProvider extends ServiceProvider
                 $config['password'],
                 $config['sandbox'],
                 null,
-                $app->make('log')
+                null
             );
         });
     }
@@ -230,7 +230,7 @@ class UpsApiServiceProvider extends ServiceProvider
                 $config['password'],
                 $config['sandbox'],
                 null,
-                $app->make('log')
+                null
             );
         });
     }
@@ -251,7 +251,7 @@ class UpsApiServiceProvider extends ServiceProvider
                 $config['password'],
                 $config['sandbox'],
                 null,
-                $app->make('log')
+                null
             );
         });
     }
