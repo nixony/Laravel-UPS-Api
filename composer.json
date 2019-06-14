@@ -1,5 +1,5 @@
 {
-  "name": "ptondereau/laravel-ups-api",
+  "name": "nixony86/laravel-ups-api",
   "description": "A small Laravel's wrapper for the PHP UPS API library",
   "keywords": ["laravel", "framework", "UPS", "Laravel UPS Api", "Laravel-Ups-Api", "Pierre Tondereau", "Ptondereau"],
   "require": {
