@@ -10,6 +10,7 @@ use Ups\AddressValidation;
 use Ups\Locator;
 use Ups\QuantumView;
 use Ups\Rate;
+use Ups\RateTimeInTransit;
 use Ups\Shipping;
 use Ups\SimpleAddressValidation;
 use Ups\TimeInTransit;
@@ -23,12 +24,7 @@ use Ups\Tradeability;
  */
 class UpsApiServiceProvider extends ServiceProvider
 {
-    /**
-     * Boot the service provider.
-     *
-     * @return void
-     */
-    public function boot()
+    public function boot(): void
     {
         $this->setupConfig();
     }
@@ -38,7 +34,7 @@ class UpsApiServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function register()
+    public function register(): void
     {
         $this->registerAddressValidation();
         $this->registerSimpleAddressValidation();
@@ -49,14 +45,10 @@ class UpsApiServiceProvider extends ServiceProvider
         $this->registerLocator();
         $this->registerTradeability();
         $this->registerShipping();
+        $this->registerRateTimeInTransit();
     }
 
-    /**
-     * Setup the config.
-     *
-     * @return void
-     */
-    protected function setupConfig()
+    protected function setupConfig(): void
     {
         $source = realpath(__DIR__.'/../config/ups.php');
         if ($this->app instanceof LaravelApplication && $this->app->runningInConsole()) {
@@ -67,12 +59,7 @@ class UpsApiServiceProvider extends ServiceProvider
         $this->mergeConfigFrom($source, 'ups');
     }
 
-    /**
-     * Register the AddressValidation class.
-     *
-     * @return void
-     */
-    protected function registerAddressValidation()
+    protected function registerAddressValidation(): void
     {
         $this->app->singleton('ups.address-validation', function (Container $app) {
             $config = $app->config->get('ups');
@@ -88,12 +75,7 @@ class UpsApiServiceProvider extends ServiceProvider
         });
     }
 
-    /**
-     * Register the SimpleAddressValidation class.
-     *
-     * @return void
-     */
-    protected function registerSimpleAddressValidation()
+    protected function registerSimpleAddressValidation(): void
     {
         $this->app->singleton('ups.simple-address-validation', function (Container $app) {
             $config = $app->config->get('ups');
@@ -109,12 +91,7 @@ class UpsApiServiceProvider extends ServiceProvider
         });
     }
 
-    /**
-     * Register the QuantumView class.
-     *
-     * @return void
-     */
-    protected function registerQuantumView()
+    protected function registerQuantumView(): void
     {
         $this->app->singleton('ups.quantum-view', function (Container $app) {
             $config = $app->config->get('ups');
@@ -130,12 +107,7 @@ class UpsApiServiceProvider extends ServiceProvider
         });
     }
 
-    /**
-     * Register the Tracking class.
-     *
-     * @return void
-     */
-    protected function registerTracking()
+    protected function registerTracking(): void
     {
         $this->app->singleton('ups.tracking', function (Container $app) {
             $config = $app->config->get('ups');
@@ -151,12 +123,7 @@ class UpsApiServiceProvider extends ServiceProvider
         });
     }
 
-    /**
-     * Register the Rate class.
-     *
-     * @return void
-     */
-    protected function registerRate()
+    protected function registerRate(): void
     {
         $this->app->singleton('ups.rate', function (Container $app) {
             $config = $app->config->get('ups');
@@ -172,12 +139,7 @@ class UpsApiServiceProvider extends ServiceProvider
         });
     }
 
-    /**
-     * Register the TimeInTransit class.
-     *
-     * @return void
-     */
-    protected function registerTimeInTransit()
+    protected function registerTimeInTransit(): void
     {
         $this->app->singleton('ups.time-in-transit', function (Container $app) {
             $config = $app->config->get('ups');
@@ -193,12 +155,7 @@ class UpsApiServiceProvider extends ServiceProvider
         });
     }
 
-    /**
-     * Register the Locator class.
-     *
-     * @return void
-     */
-    protected function registerLocator()
+    protected function registerLocator(): void
     {
         $this->app->singleton('ups.locator', function (Container $app) {
             $config = $app->config->get('ups');
@@ -214,12 +171,7 @@ class UpsApiServiceProvider extends ServiceProvider
         });
     }
 
-    /**
-     * Register the Tradeability class.
-     *
-     * @return void
-     */
-    protected function registerTradeability()
+    protected function registerTradeability(): void
     {
         $this->app->singleton('ups.tradeability', function (Container $app) {
             $config = $app->config->get('ups');
@@ -235,12 +187,7 @@ class UpsApiServiceProvider extends ServiceProvider
         });
     }
 
-    /**
-     * Register the Tradeability class.
-     *
-     * @return void
-     */
-    protected function registerShipping()
+    protected function registerShipping(): void
     {
         $this->app->singleton('ups.shipping', function (Container $app) {
             $config = $app->config->get('ups');
@@ -256,12 +203,22 @@ class UpsApiServiceProvider extends ServiceProvider
         });
     }
 
-    /**
-     * Get the services provided by the provider.
-     *
-     * @return string[]
-     */
-    public function provides()
+    protected function registerRateTimeInTransit(): void
+    {
+        $this->app->singleton('ups.ratetimeintransit', function (Container $app) {
+            $config = $app->config->get('ups');
+
+            return new RateTimeInTransit(
+                $config['access_key'],
+                $config['user_id'],
+                $config['password'],
+                $config['sandbox'],
+                null
+            );
+        });
+    }
+
+    public function provides(): array
     {
         return [
             'ups.address-validation',
@@ -273,6 +230,7 @@ class UpsApiServiceProvider extends ServiceProvider
             'ups.locator',
             'ups.tradeability',
             'ups.shipping',
+            'ups.ratetimeintransit',
         ];
     }
 }
